@@ -4,6 +4,7 @@ import br.com.helton.projeto_ponto_eletronico.dto.RetornoUsuarioDto;
 import br.com.helton.projeto_ponto_eletronico.dto.UsuarioDto;
 import br.com.helton.projeto_ponto_eletronico.dto.UsuarioParaEdicaoDto;
 import br.com.helton.projeto_ponto_eletronico.service.UsuarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
+@SecurityRequirement(name = "bearer-key")
 public class UsuarioController {
 
     @Autowired

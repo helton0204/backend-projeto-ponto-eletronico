@@ -4,7 +4,6 @@ import br.com.helton.projeto_ponto_eletronico.dto.JornadaDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;

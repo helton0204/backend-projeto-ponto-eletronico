@@ -4,6 +4,7 @@ import br.com.helton.projeto_ponto_eletronico.dto.DataMesAnoDto;
 import br.com.helton.projeto_ponto_eletronico.dto.PontoDto;
 import br.com.helton.projeto_ponto_eletronico.dto.RegistroPontoDto;
 import br.com.helton.projeto_ponto_eletronico.service.PontoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pontos")
+@SecurityRequirement(name = "bearer-key")
 public class PontoController {
 
     @Autowired

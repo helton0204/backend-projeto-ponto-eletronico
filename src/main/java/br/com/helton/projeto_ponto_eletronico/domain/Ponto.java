@@ -7,7 +7,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-//Entidade Ponto
 @Entity
 @Table(name = "pontos")
 @AllArgsConstructor
@@ -56,7 +55,6 @@ public class Ponto {
 
     public Ponto() {}
 
-    // Getters e Setters
 
     public Long getId() {
         return id;

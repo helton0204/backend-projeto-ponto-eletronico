@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.naming.AuthenticationException;
 
-@RestControllerAdvice //essa anotação é usada para criar um componente global que lida com exceções em controladores REST e retorna respostas em formato JSON (ou XML, dependendo da configuração) de maneira consistente. Qualquer erro lançado por um controlador REST será tratado por esse componente, se a exceção estiver mapeada aqui.
+@RestControllerAdvice
 public class TratadorDeErros {
 
     @ExceptionHandler(ValidacaoException.class)

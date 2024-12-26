@@ -2,7 +2,6 @@ package br.com.helton.projeto_ponto_eletronico.dto;
 
 import br.com.helton.projeto_ponto_eletronico.domain.Ponto;
 import br.com.helton.projeto_ponto_eletronico.domain.TipoJornada;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

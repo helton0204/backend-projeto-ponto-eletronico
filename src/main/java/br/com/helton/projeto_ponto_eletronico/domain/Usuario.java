@@ -1,6 +1,6 @@
 package br.com.helton.projeto_ponto_eletronico.domain;
 
-import br.com.helton.projeto_ponto_eletronico.dto.UsuarioDto;
+import br.com.helton.projeto_ponto_eletronico.dto.CadastroUsuarioDto;
 import br.com.helton.projeto_ponto_eletronico.dto.UsuarioParaEdicaoDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,7 +40,7 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
     private List<Ponto> pontos;
 
-    public Usuario(UsuarioDto usuarioDto, String senhaCriptografada, Jornada jornada) {
+    public Usuario(CadastroUsuarioDto usuarioDto, String senhaCriptografada, Jornada jornada) {
         this.nome = usuarioDto.nome();
         this.email = usuarioDto.email();
         this.login = usuarioDto.login();
@@ -50,27 +50,6 @@ public class Usuario implements UserDetails {
     }
 
     public Usuario() {}
-
-    public void atualizarDadosUsuario(UsuarioParaEdicaoDto usuarioDto, Jornada jornada) {
-        if (usuarioDto.nome() != null) {
-            this.nome = usuarioDto.nome();
-        }
-        if (usuarioDto.email() != null) {
-            this.email = usuarioDto.email();
-        }
-        if (usuarioDto.login() != null) {
-            this.login = usuarioDto.login();
-        }
-        if (usuarioDto.senha() != null) {
-            this.senha = usuarioDto.senha();
-        }
-        if (usuarioDto.role() != null) {
-            this.role = usuarioDto.role();
-        }
-        if(usuarioDto.tipoJornada() != null) {
-            this.jornada = jornada;
-        }
-    }
 
     // Métodos do UserDetails
     @Override

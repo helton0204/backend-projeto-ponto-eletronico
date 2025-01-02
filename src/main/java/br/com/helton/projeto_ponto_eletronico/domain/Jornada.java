@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import java.util.ArrayList;
 import java.util.List;
 
-//Entidade Jornada
 @Entity
 @Table(name = "jornadas")
 @AllArgsConstructor

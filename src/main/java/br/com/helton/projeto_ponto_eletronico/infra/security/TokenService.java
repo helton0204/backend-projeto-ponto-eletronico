@@ -25,6 +25,9 @@ public class TokenService {
                     .withIssuer("API Ponto Eletronico")
                     .withSubject(usuario.getLogin())
                     .withClaim("id", usuario.getId())
+                    .withClaim("nome", usuario.getNome())
+                    .withClaim("role", usuario.getRole().toString())
+                    .withClaim("jornada", usuario.getJornada().getTipoJornada().toString())
                     .withExpiresAt(dataExpiracao(30))
                     .sign(algoritmo);
             return token;

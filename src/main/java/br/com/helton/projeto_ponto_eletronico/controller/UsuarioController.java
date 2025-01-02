@@ -1,7 +1,7 @@
 package br.com.helton.projeto_ponto_eletronico.controller;
 
+import br.com.helton.projeto_ponto_eletronico.dto.CadastroUsuarioDto;
 import br.com.helton.projeto_ponto_eletronico.dto.RetornoUsuarioDto;
-import br.com.helton.projeto_ponto_eletronico.dto.UsuarioDto;
 import br.com.helton.projeto_ponto_eletronico.dto.UsuarioParaEdicaoDto;
 import br.com.helton.projeto_ponto_eletronico.service.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -25,7 +25,7 @@ public class UsuarioController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/cadastrar")
-    public ResponseEntity<RetornoUsuarioDto> cadastrarUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
+    public ResponseEntity<RetornoUsuarioDto> cadastrarUsuario(@RequestBody @Valid CadastroUsuarioDto usuarioDto) {
         RetornoUsuarioDto novoUsuario = usuarioService.cadastrarUsuario(usuarioDto);
         return ResponseEntity.status(201).body(novoUsuario);
     }

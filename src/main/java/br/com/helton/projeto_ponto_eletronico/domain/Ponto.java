@@ -33,10 +33,10 @@ public class Ponto {
     private LocalTime horaSaida;
 
     @Column(name = "horas_trabalhadas")
-    private Duration horasTrabalhadas;
+    private LocalTime horasTrabalhadas;
 
-    @Column(name = "horas_excedentes")
-    private Duration horasExcedentes;
+    @Column(name = "saldo_em_minutos")
+    private Integer saldoEmMinutos;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -104,25 +104,26 @@ public class Ponto {
         this.horaSaida = horaSaida;
     }
 
-    public Duration getHorasTrabalhadas() {
+    public LocalTime getHorasTrabalhadas() {
         return horasTrabalhadas;
     }
 
     public void setHorasTrabalhadas() {
         if (horaEntrada != null && horaSaida != null) {
-            this.horasTrabalhadas = Duration.between(horaEntrada, horaSaida);
+            Duration duration = Duration.between(this.horaEntrada, this.horaSaida);
+            this.horasTrabalhadas = LocalTime.of((int) duration.toHours(), (int) (duration.toMinutes() % 60));
         }
     }
 
-    public Duration getHorasExcedentes() {
-        return horasExcedentes;
+    public Integer getSaldoEmMinutos() {
+        return saldoEmMinutos;
     }
 
-    public void setHorasExcedentes() {
-        int expediente = this.jornada.getTipoJornada() == TipoJornada.SEIS_HORAS ? 6 : 8;
-        Duration jornadaExpediente = Duration.ofHours(expediente);
-        if (horasTrabalhadas != null) {
-            this.horasExcedentes = horasTrabalhadas.minus(jornadaExpediente);
+    public void setSaldoEmMinutos() {
+        int expediente = this.jornada.getTipoJornada() == TipoJornada.SEIS_HORAS ? 360 : 480;
+        if (this.horasTrabalhadas != null) {
+            int totalMinutosTrabalhados = this.horasTrabalhadas.getHour() * 60 + this.horasTrabalhadas.getMinute();
+            this.saldoEmMinutos = totalMinutosTrabalhados - expediente;
         }
     }
 

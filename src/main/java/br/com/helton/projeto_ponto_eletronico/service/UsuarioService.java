@@ -2,8 +2,8 @@ package br.com.helton.projeto_ponto_eletronico.service;
 
 import br.com.helton.projeto_ponto_eletronico.domain.Jornada;
 import br.com.helton.projeto_ponto_eletronico.domain.Usuario;
+import br.com.helton.projeto_ponto_eletronico.dto.CadastroUsuarioDto;
 import br.com.helton.projeto_ponto_eletronico.dto.RetornoUsuarioDto;
-import br.com.helton.projeto_ponto_eletronico.dto.UsuarioDto;
 import br.com.helton.projeto_ponto_eletronico.dto.UsuarioParaEdicaoDto;
 import br.com.helton.projeto_ponto_eletronico.infra.exception.UsuarioNaoEncontradoException;
 import br.com.helton.projeto_ponto_eletronico.repository.JornadaRepository;
@@ -31,7 +31,7 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public RetornoUsuarioDto cadastrarUsuario(UsuarioDto usuarioDto) {
+    public RetornoUsuarioDto cadastrarUsuario(CadastroUsuarioDto usuarioDto) {
         if (usuarioRepository.existsByEmail(usuarioDto.email())) {
             throw new IllegalArgumentException("Já existe um usuário com o mesmo email.");
         }
@@ -39,8 +39,8 @@ public class UsuarioService {
             throw new IllegalArgumentException("Já existe um usuário com o mesmo login.");
         }
 
-        Jornada jornada = jornadaRepository.findById(usuarioDto.jornadaId())
-                .orElseThrow(() -> new IllegalArgumentException("Jornada não encontrada com o ID: " + usuarioDto.jornadaId()));
+        Jornada jornada = jornadaRepository.findByTipoJornada(usuarioDto.tipoJornada())
+                .orElseThrow(() -> new IllegalArgumentException("Jornada não encontrada com o ID: " + usuarioDto.tipoJornada()));
 
         String senhaCriptografada = passwordEncoder.encode(usuarioDto.senha());
 
@@ -77,7 +77,7 @@ public class UsuarioService {
         Jornada jornada = jornadaRepository.findByTipoJornada(usuarioDto.tipoJornada())
                 .orElseThrow(() -> new EntityNotFoundException("Jornada não encontrada para o tipo: " + usuarioDto.tipoJornada()));
 
-        usuario.atualizarDadosUsuario(usuarioDto, jornada);
+        atualizarDadosUsuario(usuario, usuarioDto, jornada);
         Usuario usuarioAtualizado = usuarioRepository.save(usuario);
         return new RetornoUsuarioDto(usuarioAtualizado);
     }
@@ -85,6 +85,28 @@ public class UsuarioService {
     @Transactional
     public void excluirUsuario(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    private void atualizarDadosUsuario(Usuario usuario, UsuarioParaEdicaoDto usuarioDto, Jornada jornada) {
+        if (usuarioDto.nome() != null) {
+            usuario.setNome(usuarioDto.nome());
+        }
+        if (usuarioDto.email() != null) {
+            usuario.setEmail(usuarioDto.email());
+        }
+        if (usuarioDto.login() != null) {
+            usuario.setLogin(usuarioDto.login());
+        }
+        if (usuarioDto.senha() != null) {
+            String senhaCriptografada = passwordEncoder.encode(usuarioDto.senha());
+            usuario.setSenha(senhaCriptografada);
+        }
+        if (usuarioDto.role() != null) {
+            usuario.setRole(usuarioDto.role());
+        }
+        if(usuarioDto.tipoJornada() != null) {
+            usuario.getJornada().setTipoJornada(usuarioDto.tipoJornada());
+        }
     }
 
 }

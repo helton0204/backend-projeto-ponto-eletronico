@@ -13,7 +13,9 @@ public record PontoDto(
         LocalTime pausaAlmoco,
         LocalTime retornoAlmoco,
         LocalTime horaSaida,
-        TipoJornada tipoJornada
+        LocalTime horasTrabalhadas,
+        TipoJornada tipoJornada,
+        Integer saldoMinutos
 ) {
     public PontoDto(Ponto ponto) {
         this(
@@ -23,7 +25,9 @@ public record PontoDto(
                 ponto.getPausaAlmoco(),
                 ponto.getRetornoAlmoco(),
                 ponto.getHoraSaida(),
-                ponto.getJornada().getTipoJornada()
+                ponto.getHorasTrabalhadas(),
+                ponto.getJornada().getTipoJornada(),
+                ponto.getSaldoEmMinutos()
         );
     }
 }

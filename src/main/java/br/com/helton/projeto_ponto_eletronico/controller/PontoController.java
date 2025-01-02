@@ -2,6 +2,7 @@ package br.com.helton.projeto_ponto_eletronico.controller;
 
 import br.com.helton.projeto_ponto_eletronico.dto.DataMesAnoDto;
 import br.com.helton.projeto_ponto_eletronico.dto.PontoDto;
+import br.com.helton.projeto_ponto_eletronico.dto.PontosDoMesDto;
 import br.com.helton.projeto_ponto_eletronico.dto.RegistroPontoDto;
 import br.com.helton.projeto_ponto_eletronico.service.PontoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -42,14 +43,5 @@ public class PontoController {
         List<PontoDto> pontos = pontoService.listarPontosPorMes(userDetails.getUsername(), data);
         return ResponseEntity.ok(pontos);
     }
-
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @GetMapping
-    @RequestMapping("/ponto-de-hoje")
-    public ResponseEntity<PontoDto> consultarPontosDoDia(@AuthenticationPrincipal UserDetails userDetails) {
-        PontoDto pontosDoDia = pontoService.consultarPontoDoDia(userDetails.getUsername());
-        return ResponseEntity.ok(pontosDoDia);
-    }
-
 
 }
